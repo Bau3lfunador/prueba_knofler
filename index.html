@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tragaperras Tech</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Rajdhani:wght@400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="estilosprueba.css">
+</head>
+<body>
+<div class="particles" id="particles"></div>
+<div class="neon-bg"></div>
+
+<div class="caja">
+
+  <div class="titulo-wrap">
+    <h1>TRAGAPERRAS<span class="titulo-sub">TECH</span></h1>
+    <div class="titulo-linea"></div>
+  </div>
+  <div class="musica-panel">
+    <div class="musica-header">
+      <span class="musica-icono" id="musica-icono">🎵</span>
+      <span class="musica-titulo" id="musica-titulo">SIN PISTA</span>
+      <button class="musica-btn" id="btn-play" onclick="toggleMusica()">▶</button>
+    </div>
+    <div class="musica-controles">
+      <div class="pistas-wrap">
+        <button class="pista-btn activa" onclick="seleccionarPista(0)" id="pista-0">BEAT 01</button>
+        <button class="pista-btn" onclick="seleccionarPista(1)" id="pista-1">BEAT 02</button>
+        <button class="pista-btn" onclick="seleccionarPista(2)" id="pista-2">BEAT 03</button>
+      </div>
+      <div class="volumen-wrap">
+        <span class="vol-icono" id="vol-icono">🔊</span>
+        <input type="range" min="0" max="100" value="60" class="volumen-slider" id="volumen" oninput="cambiarVolumen(this.value)">
+        <span class="vol-num" id="vol-num">60</span>
+      </div>
+    </div>
+    <div class="ecualizador" id="ecualizador">
+      <div class="barra-eq"></div><div class="barra-eq"></div><div class="barra-eq"></div>
+      <div class="barra-eq"></div><div class="barra-eq"></div><div class="barra-eq"></div>
+      <div class="barra-eq"></div><div class="barra-eq"></div>
+    </div>
+  </div>
+  <div class="stats-row">
+    <div class="stat-box">
+      <div class="stat-label">CRÉDITOS</div>
+      <div class="stat-valor dinero-color">$<span id="plata">100</span></div>
+    </div>
+    <div class="stat-box">
+      <div class="stat-label">APUESTA</div>
+      <div class="stat-valor">$5</div>
+    </div>
+    <div class="stat-box">
+      <div class="stat-label">GANADAS</div>
+      <div class="stat-valor verde" id="stat-ganadas">0</div>
+    </div>
+  </div>
+
+ 
+  <details class="premios-details">
+    <summary>VER PREMIOS ▾</summary>
+    <div class="premios">
+      <div>💻 💻 💻 <span class="premio-num">+$120</span></div>
+      <div>📱 📱 📱 <span class="premio-num">+$80</span></div>
+      <div>⌨️ ⌨️ ⌨️ <span class="premio-num">+$60</span></div>
+      <div>🖱️ 🖱️ 🖱️ <span class="premio-num">+$40</span></div>
+      <div>🎧 🎧 🎧 <span class="premio-num">+$25</span></div>
+      <div>🖥️ 🖥️ 🖥️ <span class="premio-num">+$15</span></div>
+    </div>
+  </details>
+  <div class="maquina-wrap">
+    <div class="maquina-top">
+      <div class="luz-top"></div>
+      <div class="luz-top"></div>
+      <div class="luz-top"></div>
+    </div>
+
+    <div class="slot" id="slot">
+      <div class="linea-ganancia"></div>
+
+      <div class="fila">
+        <div class="item" id="a1">💻</div>
+        <div class="item" id="a2">📱</div>
+        <div class="item" id="a3">⌨️</div>
+      </div>
+      <div class="fila">
+        <div class="item fila-central" id="b1">🖱️</div>
+        <div class="item fila-central" id="b2">🎧</div>
+        <div class="item fila-central" id="b3">🖥️</div>
+      </div>
+      <div class="fila">
+        <div class="item" id="c1">💻</div>
+        <div class="item" id="c2">📱</div>
+        <div class="item" id="c3">⌨️</div>
+      </div>
+    </div>
+
+    <div class="maquina-bottom">
+      <div class="led"></div><div class="led"></div><div class="led"></div>
+      <div class="led"></div><div class="led"></div><div class="led"></div>
+    </div>
+  </div>
+
+  
+  <div class="resultado" id="resultado">¡PROBÁ SUERTE!</div>
+
+  
+  <button class="btn-girar" onclick="girar()" id="btn-girar">
+    <span class="btn-texto">GIRAR</span>
+    <span class="btn-subtext">$5 por tiro</span>
+  </button>
+
+</div>
+
+
+<div class="overlay-victoria" id="overlay-victoria">
+  <div class="victoria-texto" id="victoria-texto">¡GANASTE!</div>
+  <div class="confetti-wrap" id="confetti-wrap"></div>
+</div>
+
+<script>
+
+let audioCtx = null;
+let masterGain = null;
+let oscNodes = [];
+let musicaActiva = false;
+let pistaActual = 0;
+let intervalMusica = null;
+let animEq = null;
+
+const musicaFondo = new Audio("http://youtube.com/watch?v=Fxt-JZ2VTPw");
+const musica777 = new Audio("https://files.catbox.moe/cbz7u0.mp3");
+
+musicaFondo.loop = true;
+musica777.loop = false;
+
+musicaFondo.volume = 0.5;
+musica777.volume = 1;
+
+let pistaStep = 0;
+
+function initAudio() {
+  if (!audioCtx) {
+    audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+    masterGain = audioCtx.createGain();
+    masterGain.gain.value = 0.6;
+    masterGain.connect(audioCtx.destination);
+  }
+}
+
+function playTone(freq, duration = 0.12) {
+  if (!audioCtx || !musicaActiva) return;
+  const osc = audioCtx.createOscillator();
+  const gain = audioCtx.createGain();
+  osc.connect(gain);
+  gain.connect(masterGain);
+  osc.type = 'square';
+  osc.frequency.value = freq;
+  gain.gain.setValueAtTime(0.3, audioCtx.currentTime);
+  gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + duration);
+  osc.start();
+  osc.stop(audioCtx.currentTime + duration);
+}
+
+function playWinSound() {
+  initAudio();
+  const notas = [523, 659, 784, 1047];
+  notas.forEach((n, i) => {
+    setTimeout(() => {
+      const osc = audioCtx.createOscillator();
+      const gain = audioCtx.createGain();
+      osc.connect(gain);
+      gain.connect(masterGain);
+      osc.type = 'sine';
+      osc.frequency.value = n;
+      gain.gain.setValueAtTime(0.5, audioCtx.currentTime);
+      gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.4);
+      osc.start();
+      osc.stop(audioCtx.currentTime + 0.4);
+    }, i * 120);
+  });
+}
+
+function playLoseSound() {
+  initAudio();
+  if (!audioCtx) return;
+  const osc = audioCtx.createOscillator();
+  const gain = audioCtx.createGain();
+  osc.connect(gain);
+  gain.connect(masterGain);
+  osc.type = 'sawtooth';
+  osc.frequency.value = 150;
+  osc.frequency.linearRampToValueAtTime(80, audioCtx.currentTime + 0.3);
+  gain.gain.setValueAtTime(0.4, audioCtx.currentTime);
+  gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.3);
+  osc.start();
+  osc.stop(audioCtx.currentTime + 0.3);
+}
+
+function toggleMusica() {
+  initAudio();
+  musicaActiva = !musicaActiva;
+  const btn = document.getElementById('btn-play');
+  const icono = document.getElementById('musica-icono');
+  const eq = document.getElementById('ecualizador');
+
+  if (musicaActiva) {
+    btn.textContent = '⏸';
+    icono.textContent = '🎶';
+    eq.classList.add('activo');
+    iniciarBucle();
+  } else {
+    btn.textContent = '▶';
+    icono.textContent = '🎵';
+    eq.classList.remove('activo');
+    clearInterval(intervalMusica);
+    intervalMusica = null;
+  }
+}
+
+function iniciarBucle() {
+  clearInterval(intervalMusica);
+  intervalMusica = setInterval(() => {
+    if (!musicaActiva) return;
+    const pista = pistas[pistaActual];
+    playTone(pista.patron[pistaStep % pista.patron.length], 0.15);
+    pistaStep++;
+  }, 280);
+}
+
+function seleccionarPista(idx) {
+  pistaActual = idx;
+  pistaStep = 0;
+  document.querySelectorAll('.pista-btn').forEach((b, i) => {
+    b.classList.toggle('activa', i === idx);
+  });
+  document.getElementById('musica-titulo').textContent = pistas[idx].nombre;
+  if (musicaActiva) {
+    clearInterval(intervalMusica);
+    iniciarBucle();
+  }
+}
+
+function cambiarVolumen(val) {
+  if (masterGain) masterGain.gain.value = val / 100;
+  document.getElementById('vol-num').textContent = val;
+  const icono = document.getElementById('vol-icono');
+  if (val == 0) icono.textContent = '🔇';
+  else if (val < 40) icono.textContent = '🔉';
+  else icono.textContent = '🔊';
+}
+
+
+function animarLeds() {
+  const leds = document.querySelectorAll('.led');
+  let i = 0;
+  setInterval(() => {
+    leds.forEach(l => l.classList.remove('encendido'));
+    leds[i % leds.length].classList.add('encendido');
+    i++;
+  }, 200);
+}
+
+function animarLucesTop() {
+  const luces = document.querySelectorAll('.luz-top');
+  let i = 0;
+  setInterval(() => {
+    luces.forEach(l => l.classList.remove('encendida'));
+    luces[i % luces.length].classList.add('encendida');
+    i++;
+  }, 350);
+}
+function crearParticulas() {
+  const container = document.getElementById('particles');
+  for (let i = 0; i < 30; i++) {
+    const p = document.createElement('div');
+    p.className = 'particle';
+    p.style.left = Math.random() * 100 + 'vw';
+    p.style.animationDuration = (Math.random() * 8 + 6) + 's';
+    p.style.animationDelay = (Math.random() * 8) + 's';
+    p.style.opacity = Math.random() * 0.4 + 0.1;
+    container.appendChild(p);
+  }
+}
+function mostrarVictoria(premio) {
+  const overlay = document.getElementById('overlay-victoria');
+  const texto = document.getElementById('victoria-texto');
+  const wrap = document.getElementById('confetti-wrap');
+  texto.textContent = `¡GANASTE $${premio}!`;
+  wrap.innerHTML = '';
+  for (let i = 0; i < 40; i++) {
+    const c = document.createElement('div');
+    c.className = 'confetti-piece';
+    c.style.left = Math.random() * 100 + '%';
+    c.style.background = ['#6cff8f','#00d4ff','#ff6c6c','#ffe56c','#fff'][Math.floor(Math.random()*5)];
+    c.style.animationDuration = (Math.random() * 1.5 + 1) + 's';
+    c.style.animationDelay = (Math.random() * 0.5) + 's';
+    c.style.width = c.style.height = (Math.random() * 10 + 6) + 'px';
+    wrap.appendChild(c);
+  }
+  overlay.classList.add('activo');
+  setTimeout(() => overlay.classList.remove('activo'), 2800);
+}
+let dinero = 100;
+let girando = false;
+let ganadas = 0;
+
+function girar() {
+  if (girando) return;
+  initAudio();
+
+  if (dinero < 5) {
+    document.getElementById("resultado").innerText = "❌ SIN CRÉDITOS";
+    return;
+  }
+
+  girando = true;
+  dinero -= 5;
+  document.getElementById("plata").innerText = dinero;
+  document.getElementById("resultado").innerText = "⚡ GIRANDO...";
+  document.getElementById("btn-girar").disabled = true;
+  document.getElementById("slot").classList.add("slot-girando");
+
+  const objetos = ["💻","📱","⌨️","🖱️","🎧","🖥️"];
+  const ids = ["a1","a2","a3","b1","b2","b3","c1","c2","c3"];
+
+  for (let i = 0; i < ids.length; i++) {
+    setTimeout(() => {
+      const cuadro = document.getElementById(ids[i]);
+      cuadro.classList.add("girando");
+
+      const intervalo = setInterval(() => {
+        cuadro.innerText = objetos[Math.floor(Math.random() * objetos.length)];
+        if (audioCtx && musicaActiva) playTone(200 + Math.random()*100, 0.04);
+      }, 90);
+
+      setTimeout(() => {
+        clearInterval(intervalo);
+        cuadro.classList.remove("girando");
+      }, 1400 + i * 50);
+
+    }, i * 180);
+  }
+
+  setTimeout(() => {
+    const get = id => document.getElementById(id).innerText;
+    const a1=get("a1"),a2=get("a2"),a3=get("a3");
+    const b1=get("b1"),b2=get("b2"),b3=get("b3");
+    const c1=get("c1"),c2=get("c2"),c3=get("c3");
+
+    function calcularPremio(s) {
+      return {"💻":120,"📱":80,"⌨️":60,"🖱️":40,"🎧":25,"🖥️":15}[s] || 0;
+    }
+
+    let premio = 0;
+    if (a1==a2 && a2==a3) premio = calcularPremio(a1);
+    if (b1==b2 && b2==b3) premio = Math.max(premio, calcularPremio(b1));
+    if (c1==c2 && c2==c3) premio = Math.max(premio, calcularPremio(c1));
+    if (a1==b2 && b2==c3) premio = Math.max(premio, calcularPremio(a1));
+    if (a3==b2 && b2==c1) premio = Math.max(premio, calcularPremio(a3));
+
+    document.getElementById("slot").classList.remove("slot-girando");
+
+    if (premio > 0) {
+      dinero += premio;
+      ganadas++;
+      document.getElementById("plata").innerText = dinero;
+      document.getElementById("stat-ganadas").innerText = ganadas;
+      document.getElementById("resultado").innerText = `🏆 ¡GANASTE $${premio}!`;
+      document.getElementById("slot").classList.add("slot-ganador");
+      setTimeout(() => document.getElementById("slot").classList.remove("slot-ganador"), 1200);
+      playWinSound();
+      mostrarVictoria(premio);
+    } else {
+      document.getElementById("resultado").innerText = "💀 PERDISTE $5";
+      playLoseSound();
+      document.getElementById("slot").classList.add("slot-perdedor");
+      setTimeout(() => document.getElementById("slot").classList.remove("slot-perdedor"), 500);
+    }
+
+    girando = false;
+    document.getElementById("btn-girar").disabled = false;
+  }, 3400);
+}
+window.onload = () => {
+  crearParticulas();
+  animarLeds();
+  animarLucesTop();
+  seleccionarPista(0);
+  document.getElementById('musica-titulo').textContent = pistas[0].nombre;
+};
+</script>
+
+</body>
+</html>
