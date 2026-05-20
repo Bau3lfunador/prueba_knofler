@@ -4,13 +4,10 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Tragaperras Tech</title>
-
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Rajdhani:wght@400;600&display=swap" rel="stylesheet">
-
 <link rel="stylesheet" href="estilosprueba.css">
 </head>
-
 <body>
 
 <div class="particles" id="particles"></div>
@@ -29,31 +26,18 @@
       <span class="musica-titulo" id="musica-titulo">SIN PISTA</span>
       <button class="musica-btn" id="btn-play" onclick="toggleMusica()">▶</button>
     </div>
-
     <div class="musica-controles">
       <div class="pistas-wrap">
         <button class="pista-btn activa" onclick="seleccionarPista(0)" id="pista-0">BEAT 01</button>
         <button class="pista-btn" onclick="seleccionarPista(1)" id="pista-1">BEAT 02</button>
         <button class="pista-btn" onclick="seleccionarPista(2)" id="pista-2">BEAT 03</button>
       </div>
-
       <div class="volumen-wrap">
         <span class="vol-icono" id="vol-icono">🔊</span>
-
-        <input
-          type="range"
-          min="0"
-          max="100"
-          value="60"
-          class="volumen-slider"
-          id="volumen"
-          oninput="cambiarVolumen(this.value)"
-        >
-
+        <input type="range" min="0" max="100" value="60" class="volumen-slider" id="volumen" oninput="cambiarVolumen(this.value)">
         <span class="vol-num" id="vol-num">60</span>
       </div>
     </div>
-
     <div class="ecualizador" id="ecualizador">
       <div class="barra-eq"></div>
       <div class="barra-eq"></div>
@@ -70,47 +54,20 @@
 
     <div class="stat-box">
       <div class="stat-label">CRÉDITOS</div>
-      <div class="stat-valor dinero-color">
-        $<span id="plata">100</span>
-      </div>
+      <div class="stat-valor dinero-color">$<span id="plata">100</span></div>
     </div>
 
-    <div class="stat-box apuesta-box" id="apuesta-box" onclick="toggleApuestaPopup(event)">
-
+    <div class="stat-box apuesta-box" id="apuesta-box">
       <div class="stat-label">APUESTA</div>
-
       <div class="stat-valor" id="apuesta-valor">$5</div>
-
-      <div class="apuesta-hint">ajustar ▾</div>
-
       <div class="apuesta-popup" id="apuesta-popup">
-
-        <div class="apuesta-popup-titulo">
-          SELECCIONAR APUESTA
-        </div>
-
+        <div class="apuesta-popup-titulo">SELECCIONAR APUESTA</div>
         <div class="apuesta-opciones">
-
-          <button class="apuesta-opcion seleccionada" onclick="setApuesta(5,event)">
-            $5
-          </button>
-
-          <button class="apuesta-opcion" onclick="setApuesta(10,event)">
-            $10
-          </button>
-
-          <button class="apuesta-opcion" onclick="setApuesta(25,event)">
-            $25
-          </button>
-
-          <button class="apuesta-opcion" onclick="setApuesta(50,event)">
-            $50
-          </button>
-
-          <button class="apuesta-opcion" onclick="setApuesta(100,event)">
-            $100
-          </button>
-
+          <button class="apuesta-opcion seleccionada" onclick="setApuesta(5, event)">$5</button>
+          <button class="apuesta-opcion" onclick="setApuesta(10, event)">$10</button>
+          <button class="apuesta-opcion" onclick="setApuesta(25, event)">$25</button>
+          <button class="apuesta-opcion" onclick="setApuesta(50, event)">$50</button>
+          <button class="apuesta-opcion" onclick="setApuesta(100, event)">$100</button>
         </div>
       </div>
     </div>
@@ -123,9 +80,7 @@
   </div>
 
   <details class="premios-details">
-
     <summary>VER PREMIOS ▾</summary>
-
     <div class="premios">
       <div>💻 💻 💻 <span class="premio-num">+$120</span></div>
       <div>📱 📱 📱 <span class="premio-num">+$80</span></div>
@@ -134,41 +89,32 @@
       <div>🎧 🎧 🎧 <span class="premio-num">+$25</span></div>
       <div>🖥️ 🖥️ 🖥️ <span class="premio-num">+$15</span></div>
     </div>
-
   </details>
 
   <div class="maquina-wrap">
-
     <div class="maquina-top">
       <div class="luz-top"></div>
       <div class="luz-top"></div>
       <div class="luz-top"></div>
     </div>
-
     <div class="slot" id="slot">
-
       <div class="linea-ganancia"></div>
-
       <div class="fila">
         <div class="item" id="a1">💻</div>
         <div class="item" id="a2">📱</div>
         <div class="item" id="a3">⌨️</div>
       </div>
-
       <div class="fila">
         <div class="item fila-central" id="b1">🖱️</div>
         <div class="item fila-central" id="b2">🎧</div>
         <div class="item fila-central" id="b3">🖥️</div>
       </div>
-
       <div class="fila">
         <div class="item" id="c1">💻</div>
         <div class="item" id="c2">📱</div>
         <div class="item" id="c3">⌨️</div>
       </div>
-
     </div>
-
     <div class="maquina-bottom">
       <div class="led"></div>
       <div class="led"></div>
@@ -177,38 +123,263 @@
       <div class="led"></div>
       <div class="led"></div>
     </div>
-
   </div>
 
-  <div class="resultado" id="resultado">
-    ¡PROBÁ SUERTE!
-  </div>
+  <div class="resultado" id="resultado">¡PROBÁ SUERTE!</div>
 
   <button class="btn-girar" onclick="girar()" id="btn-girar">
-
-    <span class="btn-texto">
-      GIRAR
-    </span>
-
-    <span class="btn-subtext" id="btn-subtext">
-      $5 por tiro
-    </span>
-
+    <span class="btn-texto">GIRAR</span>
+    <span class="btn-subtext" id="btn-subtext">$5 por tiro</span>
   </button>
 
 </div>
 
 <div class="overlay-victoria" id="overlay-victoria">
-
-  <div class="victoria-texto" id="victoria-texto">
-    ¡GANASTE!
-  </div>
-
+  <div class="victoria-texto" id="victoria-texto">¡GANASTE!</div>
   <div class="confetti-wrap" id="confetti-wrap"></div>
-
 </div>
 
-<script src="script.js"></script>
+<script>
+let plata       = 100;
+let apuesta     = 5;
+let ganadas     = 0;
+let estaGirando = false;
+let musicaOn    = false;
+let pistaActual = 0;
+let audioCtx    = null;
+let gainNode    = null;
+let volumen     = 60;
+let beatIndex   = 0;
+let beatTimeout = null;
+
+const SIMBOLOS = ['💻','📱','⌨️','🖱️','🎧','🖥️'];
+const PREMIOS  = { '💻':120, '📱':80, '⌨️':60, '🖱️':40, '🎧':25, '🖥️':15 };
+
+function setApuesta(val, e) {
+  e.stopPropagation();
+  apuesta = val;
+  document.getElementById('apuesta-valor').textContent = '$' + val;
+  document.getElementById('btn-subtext').textContent   = '$' + val + ' por tiro';
+  document.querySelectorAll('.apuesta-opcion').forEach(btn => {
+    btn.classList.toggle('seleccionada', parseInt(btn.textContent.replace('$','')) === val);
+  });
+}
+
+function girar() {
+  if (estaGirando) return;
+  if (plata < apuesta) {
+    const res = document.getElementById('resultado');
+    res.textContent = '¡SIN CRÉDITOS!';
+    res.style.color = 'var(--rojo)';
+    return;
+  }
+
+  estaGirando = true;
+  plata -= apuesta;
+  actualizarPlata();
+
+  const btn  = document.getElementById('btn-girar');
+  const slot = document.getElementById('slot');
+  btn.disabled = true;
+
+  document.querySelectorAll('.luz-top').forEach(l => l.classList.add('encendida'));
+  document.querySelectorAll('.led').forEach(l => l.classList.add('encendido'));
+  slot.classList.add('slot-girando');
+
+  const celdas  = ['a1','a2','a3','b1','b2','b3','c1','c2','c3'];
+  const result  = {};
+  celdas.forEach(id => result[id] = SIMBOLOS[Math.floor(Math.random() * SIMBOLOS.length)]);
+
+  const duraciones = [900, 950, 1000, 980, 1030, 1080, 1060, 1110, 1160];
+  const spinIntervals = {};
+
+  celdas.forEach((id, i) => {
+    const el = document.getElementById(id);
+    el.classList.add('girando');
+
+    spinIntervals[id] = setInterval(() => {
+      el.textContent = SIMBOLOS[Math.floor(Math.random() * SIMBOLOS.length)];
+    }, 80);
+
+    setTimeout(() => {
+      clearInterval(spinIntervals[id]);
+      el.textContent = result[id];
+      el.classList.remove('girando');
+    }, duraciones[i]);
+  });
+
+  setTimeout(() => {
+    evaluarResultado(result);
+  }, 1300);
+}
+
+function evaluarResultado(r) {
+  const b   = [r.b1, r.b2, r.b3];
+  const slot = document.getElementById('slot');
+  const res  = document.getElementById('resultado');
+  const btn  = document.getElementById('btn-girar');
+
+  slot.classList.remove('slot-girando');
+  document.querySelectorAll('.luz-top').forEach(l => l.classList.remove('encendida'));
+  document.querySelectorAll('.led').forEach(l => l.classList.remove('encendido'));
+
+  if (b[0] === b[1] && b[1] === b[2]) {
+    const premio = PREMIOS[b[0]] || 0;
+    plata += premio;
+    ganadas++;
+    actualizarPlata();
+    document.getElementById('stat-ganadas').textContent = ganadas;
+    res.textContent = '¡GANASTE $' + premio + '!';
+    res.style.color = 'var(--verde)';
+    slot.classList.add('slot-ganador');
+    mostrarVictoria(premio);
+    setTimeout(() => slot.classList.remove('slot-ganador'), 1000);
+  } else {
+    res.textContent = '¡MALA SUERTE! GIRÁ DE NUEVO';
+    res.style.color = 'var(--rojo)';
+    slot.classList.add('slot-perdedor');
+    setTimeout(() => slot.classList.remove('slot-perdedor'), 500);
+  }
+
+  btn.disabled = false;
+  estaGirando  = false;
+}
+
+function actualizarPlata() {
+  document.getElementById('plata').textContent = plata;
+}
+
+function mostrarVictoria(premio) {
+  const overlay = document.getElementById('overlay-victoria');
+  document.getElementById('victoria-texto').textContent = '¡GANASTE $' + premio + '!';
+  overlay.classList.add('activo');
+  lanzarConfetti();
+  setTimeout(() => overlay.classList.remove('activo'), 2800);
+}
+
+function lanzarConfetti() {
+  const wrap = document.getElementById('confetti-wrap');
+  wrap.innerHTML = '';
+  const colores = ['#6cff8f','#00d4ff','#ff4d6d','#fff','#ffdd00'];
+  for (let i = 0; i < 60; i++) {
+    const p = document.createElement('div');
+    p.className = 'confetti-piece';
+    p.style.left               = Math.random() * 100 + '%';
+    p.style.width              = (4 + Math.random() * 8) + 'px';
+    p.style.height             = (8 + Math.random() * 14) + 'px';
+    p.style.background         = colores[Math.floor(Math.random() * colores.length)];
+    p.style.animationDuration  = (1.5 + Math.random() * 1.5) + 's';
+    p.style.animationDelay     = (Math.random() * 0.6) + 's';
+    wrap.appendChild(p);
+  }
+}
+
+function initAudio() {
+  if (!audioCtx) {
+    audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+    gainNode = audioCtx.createGain();
+    gainNode.gain.value = volumen / 100;
+    gainNode.connect(audioCtx.destination);
+  }
+}
+
+const PISTAS = [
+  [
+    { f:220, d:0.15 }, { f:0, d:0.05 },
+    { f:330, d:0.15 }, { f:0, d:0.05 },
+    { f:220, d:0.15 }, { f:440, d:0.15 },
+    { f:0,   d:0.05 }, { f:330, d:0.1 },
+  ],
+  [
+    { f:261, d:0.2 }, { f:294, d:0.2 },
+    { f:329, d:0.2 }, { f:392, d:0.2 },
+    { f:440, d:0.2 }, { f:392, d:0.1 },
+    { f:329, d:0.1 },
+  ],
+  [
+    { f:180, d:0.1 }, { f:0, d:0.05 },
+    { f:360, d:0.1 }, { f:0, d:0.05 },
+    { f:180, d:0.1 }, { f:0, d:0.05 },
+    { f:540, d:0.1 }, { f:0, d:0.05 },
+  ]
+];
+
+function tocarBeat() {
+  if (!musicaOn) return;
+  const pista = PISTAS[pistaActual];
+  const nota  = pista[beatIndex % pista.length];
+  beatIndex++;
+  if (nota.f > 0) {
+    const osc = audioCtx.createOscillator();
+    const env = audioCtx.createGain();
+    osc.type  = 'square';
+    osc.frequency.value = nota.f;
+    env.gain.setValueAtTime(0.3, audioCtx.currentTime);
+    env.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + nota.d * 0.9);
+    osc.connect(env);
+    env.connect(gainNode);
+    osc.start();
+    osc.stop(audioCtx.currentTime + nota.d);
+  }
+  beatTimeout = setTimeout(tocarBeat, nota.d * 1000);
+}
+
+function toggleMusica() {
+  initAudio();
+  musicaOn = !musicaOn;
+  const btn    = document.getElementById('btn-play');
+  const eq     = document.getElementById('ecualizador');
+  const titulo = document.getElementById('musica-titulo');
+  if (musicaOn) {
+    btn.textContent    = '⏸';
+    eq.classList.add('activo');
+    titulo.textContent = 'BEAT 0' + (pistaActual + 1);
+    beatIndex = 0;
+    tocarBeat();
+  } else {
+    btn.textContent    = '▶';
+    eq.classList.remove('activo');
+    titulo.textContent = 'SIN PISTA';
+    clearTimeout(beatTimeout);
+  }
+}
+
+function seleccionarPista(i) {
+  pistaActual = i;
+  beatIndex   = 0;
+  document.querySelectorAll('.pista-btn').forEach((b, idx) => {
+    b.classList.toggle('activa', idx === i);
+  });
+  if (musicaOn) {
+    document.getElementById('musica-titulo').textContent = 'BEAT 0' + (i + 1);
+    clearTimeout(beatTimeout);
+    tocarBeat();
+  }
+}
+
+function cambiarVolumen(val) {
+  volumen = parseInt(val);
+  document.getElementById('vol-num').textContent = val;
+  document.getElementById('vol-icono').textContent = val == 0 ? '🔇' : val < 40 ? '🔉' : '🔊';
+  const pct = val + '%';
+  document.getElementById('volumen').style.background =
+    `linear-gradient(90deg, var(--verde) ${pct}, #333 ${pct})`;
+  if (gainNode) gainNode.gain.value = val / 100;
+}
+
+(function crearParticulas() {
+  const wrap = document.getElementById('particles');
+  for (let i = 0; i < 18; i++) {
+    const p = document.createElement('div');
+    p.className = 'particle';
+    p.style.left              = Math.random() * 100 + '%';
+    p.style.animationDuration = (6 + Math.random() * 10) + 's';
+    p.style.animationDelay    = (Math.random() * 8) + 's';
+    p.style.width = p.style.height = (2 + Math.random() * 4) + 'px';
+    wrap.appendChild(p);
+  }
+})();
+</script>
 
 </body>
 </html>
