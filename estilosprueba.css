@@ -48,7 +48,30 @@ body {
       rgba(108,255,143,.07) 0%,
       transparent 70%
     ),
+.apuesta-popup {
+  position: absolute;
+  top: calc(100% + 8px);
+  left: 50%;
+  transform: translateX(-50%) translateY(-6px);
+  background: var(--panel2);
+  border: 1px solid var(--borde);
+  border-radius: 10px;
+  padding: 12px;
+  z-index: 100;
+  min-width: 180px;
+  box-shadow: 0 8px 32px #00000088, var(--glow-a);
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transition: opacity .2s ease, transform .2s ease, visibility .2s;
+}
 
+.apuesta-box:hover .apuesta-popup {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: all;
+  transform: translateX(-50%) translateY(0);
+}
     radial-gradient(
       ellipse 50% 35% at 85% 80%,
       rgba(0,212,255,.07) 0%,
